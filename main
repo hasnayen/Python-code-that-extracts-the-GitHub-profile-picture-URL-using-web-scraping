@@ -1,0 +1,22 @@
+import requests
+from bs4 import BeautifulSoup as bs
+
+username = input('Input Github User: ')
+url = f"https://github.com/{username}"
+r = requests.get(url)
+##r.raise_for_status()
+soup = bs(r.content, 'html.parser')
+
+
+##profile_image = soup.find('img', {'alt':'Avatar'})
+profile_image_tag = soup.find('img', {'alt': 'Avatar'})  # Correct the alt attribute if there's a typo
+if not profile_image_tag:
+    profile_image_tag = soup.find('img',{'class':'avatar'})
+if profile_image_tag:
+    profile_image_tag = profile_image_tag['src']
+    print(profile_image_tag)
+else:
+    print("Image with the specified alt attribute not found")
+
+
+
